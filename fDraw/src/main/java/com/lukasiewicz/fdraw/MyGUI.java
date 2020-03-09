@@ -20,14 +20,21 @@ public class MyGUI extends JFrame implements ActionListener {
 
 	public static void createAndShowGUI() {
 
-		//Windowsetup
+		//Window setup
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension dim_minimum = dim;
+		dim_minimum.height = dim.height/3;
+		dim_minimum.width = dim.width/3;
 		JFrame guiWindow = new JFrame();
-		guiWindow.setTitle("fDraw 0.42");
-		guiWindow.setSize(640, 480);
-		guiWindow.setLocation(dim.width/2-guiWindow.getSize().width/2, dim.height/2-guiWindow.getSize().height/4*3);
+		guiWindow.setMinimumSize(dim_minimum);
+		guiWindow.setMaximumSize(dim);
+		guiWindow.pack();
+		guiWindow.setTitle("fDraw 0.43");
+		guiWindow.setSize(dim.width/2, dim.height/2);
+		guiWindow.setLocationRelativeTo(null);
 		
-		//JMenu
+		
+		//JMenu setup
 		JMenuBar menuBar;
 		JMenu menu;
 		JMenuItem saveItem;
@@ -48,7 +55,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 		saveItem.getAccessibleContext().setAccessibleDescription("Saves your wonderful drawing.");
 		saveItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 			// Save Method to be implemented
 			}
 		});
@@ -61,7 +68,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
 		exitItem.getAccessibleContext().setAccessibleDescription("Exits the application.");
 		exitItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent evt) {
 			// Exit Method
 				System.exit(0);
 			}
@@ -69,18 +76,25 @@ public class MyGUI extends JFrame implements ActionListener {
 		menu.add(exitItem);		
 	
 		guiWindow.setJMenuBar(menuBar);
+	
+		// Exit app when window closed
 		
 		guiWindow.addWindowListener(new WindowAdapter() {
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosing(WindowEvent evt) {
 				System.exit(0);
 			}
 		});
+		
+		// Display GUI window
+		
 		Container cPane = guiWindow.getContentPane();
 		cPane.add(new MyPaintPanel());
 		guiWindow.setVisible(true);
 	}
 
+	// question: why do i need this here, when i already used it above?
+	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		

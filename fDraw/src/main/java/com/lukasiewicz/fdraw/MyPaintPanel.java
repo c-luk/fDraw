@@ -19,7 +19,8 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     private static final int maxBoxes = 3;
     private Rectangle[] box = new Rectangle[maxBoxes];
     private int currentNumberOfBoxes = 0;
-    private int currentBoxIndex = -1;	
+    private int currentBoxIndex = -1;
+    boolean dragging = false;
    	    
     public MyPaintPanel() {
     	
@@ -31,16 +32,21 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     	
         addMouseListener(new MouseAdapter() {
             
+        	// When mouse pressed, add a box to screen if < maxBoxes
+        	
         	@Override
         	public void mousePressed(MouseEvent evt) {
             	int x = evt.getX();
             	int y = evt.getY();
+            	dragging = true;
                 currentBoxIndex = getBox(x, y);
                 if (currentBoxIndex < 0) {             
                 	addBox(x, y);
                }
             }
             
+        	// When mouse is doubleclicked on a box, remove that box
+        	
         	@Override
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() >= 2) {
@@ -90,7 +96,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         	((Graphics2D) g).draw(box[i]);
         }
     }
-        	 
+
     private int getBox(int x, int y) {
     	for (int i = 0; i < currentNumberOfBoxes; i++) {
     		if (box[i].contains(x, y)) {
