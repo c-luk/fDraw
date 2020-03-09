@@ -1,4 +1,4 @@
-package com.lukasiewicz.fDraw;
+package com.lukasiewicz.fdraw;
 
 import java.awt.Color;
 import java.awt.Cursor;

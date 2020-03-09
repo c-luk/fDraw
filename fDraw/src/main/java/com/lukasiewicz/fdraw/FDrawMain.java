@@ -1,4 +1,4 @@
-package com.lukasiewicz.fDraw;
+package com.lukasiewicz.fdraw;
 
 /**
  * 				fDraw - a simple app for learning/testing purposes
