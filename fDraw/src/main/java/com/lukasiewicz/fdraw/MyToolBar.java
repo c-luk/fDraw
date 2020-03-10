@@ -1,5 +1,7 @@
 package com.lukasiewicz.fdraw;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -16,36 +18,42 @@ public class MyToolBar extends JPanel implements ActionListener {
     static final private String DRAW_RECTANGLE = "Rectangle";
     
 	public MyToolBar() {
+		super(new BorderLayout());
+		
 		JToolBar toolBar = new JToolBar("CoolToolBar(tm)", JToolBar.VERTICAL);
 		toolBar.setFloatable(false);
+		toolBar.setRollover(true);
 		
-		JButton button = null;
-	
-	    //first button
-	    button = makeButton("LineButton", DRAW_LINE, "Draw a fine line", "Line");
-	    toolBar.add(button);
-	
-	    //second button
-	    button = makeButton("RectangleButton", DRAW_RECTANGLE, "Draw a spectacular rectangle", "Rectangle");
-	    toolBar.add(button);
+		JButton lineButton = null;
+		JButton rectangleButton = null;
+		
+	    lineButton = makeButton("LineButton", DRAW_LINE, "Draw a fine line", "Line");
+	    toolBar.add(lineButton);
+	    
+        toolBar.addSeparator();
+	    
+	    rectangleButton = makeButton("RectangleButton", DRAW_RECTANGLE, "Draw a spectacular rectangle", "Rectangle");
+	    toolBar.add(rectangleButton);
+	    
+        setPreferredSize(new Dimension(450, 130));
+        add(toolBar, BorderLayout.PAGE_START);
 	}
 	
     protected JButton makeButton(String imageName, String actionCommand, String toolTipText, String altText) {
-		//Look for the image.
-		String imgLocation = "src/main/resources/images/" + imageName + ".png";
-		URL imageURL = MyToolBar.class.getResource(imgLocation);
+    	String imgLocation =  "/images/" + imageName + ".png";
+		URL imageURL = this.getClass().getResource(imgLocation);
 		
-		//Create and initialize the button.
 		JButton button = new JButton();
 		button.setActionCommand(actionCommand);
 		button.setToolTipText(toolTipText);
+		button.setSize(32,32);
 		button.addActionListener(this);
 		
-		if (imageURL != null) {                      //image found
-		button.setIcon(new ImageIcon(imageURL, altText));
-		} else {                                     //no image found
-		button.setText(altText);
-		System.err.println("Resource not found: " + imgLocation);
+		if (imageURL != null) {
+			button.setIcon(new ImageIcon(imageURL, altText));
+		} else {
+			button.setText(altText);
+			System.err.println("Resource not found: " + imgLocation);
 		}
 		
 		return button;

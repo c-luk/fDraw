@@ -85,26 +85,30 @@ public class MyGUI extends JFrame implements ActionListener {
 		SpringLayout layout = new SpringLayout();
 		cPane.setLayout(layout);
 		
-		MyPaintPanel paintArea = new MyPaintPanel();
-		paintArea.setSize(dim_min);
-		cPane.add(paintArea);
-		
 		JLabel label = new JLabel("Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!");
 		cPane.add(label);
 		
 		MyToolBar toolBar = new MyToolBar();
 		cPane.add(toolBar);
 		
+		MyPaintPanel paintArea = new MyPaintPanel();
+		paintArea.setSize(dim_min);
+		cPane.add(paintArea);
+		
 		layout.putConstraint(SpringLayout.WEST, label, 5, SpringLayout.WEST, cPane);
 		layout.putConstraint(SpringLayout.NORTH, label, 5, SpringLayout.NORTH, cPane);
-		layout.putConstraint(SpringLayout.WEST, toolBar, 5, SpringLayout.WEST, cPane);
-		layout.putConstraint(SpringLayout.NORTH, toolBar, 30, SpringLayout.NORTH, cPane);
 		
-		layout.putConstraint(SpringLayout.WEST, paintArea, 120, SpringLayout.WEST, cPane);
+		layout.putConstraint(SpringLayout.WEST, toolBar, 5, SpringLayout.WEST, cPane);
+		layout.putConstraint(SpringLayout.NORTH, toolBar, 40, SpringLayout.NORTH, cPane);
+		layout.putConstraint(SpringLayout.EAST, toolBar, -5, SpringLayout.WEST, paintArea);
+		layout.putConstraint(SpringLayout.SOUTH, toolBar, -5, SpringLayout.SOUTH, cPane);
+		
+		layout.putConstraint(SpringLayout.WEST, paintArea, 70, SpringLayout.WEST, cPane);
 		layout.putConstraint(SpringLayout.NORTH, paintArea, 30, SpringLayout.NORTH, cPane);
+
 		layout.putConstraint(SpringLayout.EAST, cPane, 5, SpringLayout.EAST, paintArea);
 		layout.putConstraint(SpringLayout.SOUTH, cPane, 5, SpringLayout.SOUTH, paintArea);
-
+		
 		// Display guiWindow
 		
 		guiWindow.pack();
