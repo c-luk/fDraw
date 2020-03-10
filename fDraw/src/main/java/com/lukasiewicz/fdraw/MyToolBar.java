@@ -17,6 +17,8 @@ public class MyToolBar extends JPanel implements ActionListener {
     
 	public MyToolBar() {
 		JToolBar toolBar = new JToolBar("CoolToolBar(tm)", JToolBar.VERTICAL);
+		toolBar.setFloatable(false);
+		
 		JButton button = null;
 	
 	    //first button
