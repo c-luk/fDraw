@@ -92,9 +92,15 @@ public class MyGUI extends JFrame implements ActionListener {
 		JLabel label = new JLabel("Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!");
 		cPane.add(label);
 		
+		MyToolBar toolBar = new MyToolBar();
+		cPane.add(toolBar);
+		
 		layout.putConstraint(SpringLayout.WEST, label, 5, SpringLayout.WEST, cPane);
 		layout.putConstraint(SpringLayout.NORTH, label, 5, SpringLayout.NORTH, cPane);
-		layout.putConstraint(SpringLayout.WEST, paintArea, 30, SpringLayout.WEST, cPane);
+		layout.putConstraint(SpringLayout.WEST, toolBar, 5, SpringLayout.WEST, cPane);
+		layout.putConstraint(SpringLayout.NORTH, toolBar, 30, SpringLayout.NORTH, cPane);
+		
+		layout.putConstraint(SpringLayout.WEST, paintArea, 120, SpringLayout.WEST, cPane);
 		layout.putConstraint(SpringLayout.NORTH, paintArea, 30, SpringLayout.NORTH, cPane);
 		layout.putConstraint(SpringLayout.EAST, cPane, 5, SpringLayout.EAST, paintArea);
 		layout.putConstraint(SpringLayout.SOUTH, cPane, 5, SpringLayout.SOUTH, paintArea);

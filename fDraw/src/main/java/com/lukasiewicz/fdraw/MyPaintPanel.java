@@ -21,12 +21,11 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     private int currentNumberOfBoxes = 0;
     private int currentBoxIndex = -1;
     boolean dragging = false;
+    private int safetyBorder = 40;
    	    
     public MyPaintPanel() {
     	
     	// create subtile and nice border outline
-    	
-    	//setBackground(new Color(25,25,25));
     	
     	setBorder(BorderFactory.createLineBorder(Color.black));
      
@@ -83,16 +82,14 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     	int x = evt.getX();
     	int y = evt.getY();
     	
-    	if (x > this.getWidth()-80 || x < 20) { return; }
-    	
-    	if (y > this.getHeight()-80 || y < 20) { return; }
-
-    	if (currentBoxIndex >= 0) {
+    	if (currentBoxIndex >= 0 && 
+    			!(x > this.getWidth()-safetyBorder || x < safetyBorder) &&
+    			!(y > this.getHeight()-safetyBorder || y < safetyBorder)) {
     		Graphics graphics = getGraphics();
     		graphics.setXORMode(getBackground());
     		((Graphics2D) graphics).draw(box[currentBoxIndex]);
-    		box[currentBoxIndex].x = x;
-    		box[currentBoxIndex].y = y;
+    		box[currentBoxIndex].x = x-boxSideLength/2;
+    		box[currentBoxIndex].y = y-boxSideLength/2;
     		((Graphics2D) graphics).draw(box[currentBoxIndex]);
     		graphics.dispose();
     		repaint();
@@ -119,7 +116,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
 
     private void addBox(int x, int y) {
     	if (currentNumberOfBoxes < maxBoxes) {
-        	box[currentNumberOfBoxes] = new Rectangle(x, y, boxSideLength, boxSideLength);
+        	box[currentNumberOfBoxes] = new Rectangle(x-boxSideLength/2, y-boxSideLength/2, boxSideLength, boxSideLength);
         	currentBoxIndex = currentNumberOfBoxes;
         	currentNumberOfBoxes++;
         	repaint();
