@@ -22,6 +22,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     private int currentBoxIndex = -1;
     boolean dragging = false;
     private int safetyBorder = 40;
+    public static int drawingtool = 1;
    	    
     public MyPaintPanel() {
     	

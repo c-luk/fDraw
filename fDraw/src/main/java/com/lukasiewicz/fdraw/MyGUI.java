@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 import javax.swing.SpringLayout;
 
@@ -20,7 +22,7 @@ public class MyGUI extends JFrame implements ActionListener {
 
 	public static void createAndShowGUI() {
 
-		//Window setup
+		// Window setup
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension dim_min = new Dimension(dim.width/2, dim.height/2);
 		JFrame guiWindow = new JFrame();
@@ -29,20 +31,21 @@ public class MyGUI extends JFrame implements ActionListener {
 		guiWindow.setSize(dim_min);
 		guiWindow.setLocationRelativeTo(null);
 		
-		//JMenu setup
+		// JMenu setup
 		JMenuBar menuBar;
 		JMenu menu;
 		JMenuItem saveItem;
 		JMenuItem exitItem;
+		JMenuItem aboutItem;
 		menuBar = new JMenuBar();
 	
-		//File menu
+		// File menu
 		menu = new JMenu("File");
 		menu.setMnemonic(KeyEvent.VK_F);
 		menu.getAccessibleContext().setAccessibleDescription("File menu");
 		menuBar.add(menu);
 	
-		//File menu items
+		// File menu items
 		
 			//	Save
 		saveItem = new JMenuItem("Save (not yet implemented)", KeyEvent.VK_S);
@@ -50,12 +53,12 @@ public class MyGUI extends JFrame implements ActionListener {
 		saveItem.getAccessibleContext().setAccessibleDescription("Saves your wonderful drawing.");
 		saveItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-			// Save Method to be implemented
+			// Save Method yet to be implemented...
 			}
 		});
 		menu.add(saveItem);
 		
-		// Separator between Menus 
+		// Separator between menu items
 		
 		menu.addSeparator();
 		
@@ -65,11 +68,30 @@ public class MyGUI extends JFrame implements ActionListener {
 		exitItem.getAccessibleContext().setAccessibleDescription("Exits the application.");
 		exitItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-			// Exit Method
 				System.exit(0);
 			}
 		});
-		menu.add(exitItem);		
+		menu.add(exitItem);
+		
+		// Help menu
+		menu = new JMenu("Help");
+		menu.setMnemonic(KeyEvent.VK_H);
+		menu.getAccessibleContext().setAccessibleDescription("Help menu");
+		menuBar.add(menu);
+		
+		// Help menu items
+		
+		//	About
+		aboutItem = new JMenuItem("About", KeyEvent.VK_A);
+		aboutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
+		aboutItem.getAccessibleContext().setAccessibleDescription("Displays the about text.");
+		aboutItem.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent evt) {
+		// Displays about window
+			createAndShowAboutWindow();
+		}
+	});
+	menu.add(aboutItem);
 	
 		// Set operation for closing window
 		
@@ -115,6 +137,52 @@ public class MyGUI extends JFrame implements ActionListener {
 		guiWindow.setVisible(true);
 	}
 
+	private static void createAndShowAboutWindow() {
+		
+		// Window setup
+		JFrame aboutWindow = new JFrame();
+		aboutWindow.setTitle("About");
+		aboutWindow.setLocationRelativeTo(null);
+		aboutWindow.setMinimumSize(new Dimension(300,250));
+		
+		// Setup SpringLayout
+		
+		Container cPane = aboutWindow.getContentPane();
+		SpringLayout layout = new SpringLayout();
+		cPane.setLayout(layout);
+		
+		JLabel label = new JLabel("About fDraw 0.43");
+		cPane.add(label);
+		
+		JTextArea aboutText = new JTextArea();
+        aboutText.setEditable(false);
+        //aboutText.setOpaque(false);
+        
+        aboutText.append("Welcome to the about page."+"\n\n");
+        aboutText.append("Here you will learn more about this app."+"\n");
+        aboutText.append("...once there is something to learn about."+"\n\n");
+        aboutText.append("actually, it's a rather simple app with only two buttons..."+"\n");
+        aboutText.append("you'll figure it out all by yourself. i'm sure of it."+"\n");
+        aboutText.append("good luck.");
+        
+        
+        JScrollPane scrollPane = new JScrollPane(aboutText);
+        cPane.add(scrollPane);
+        
+		layout.putConstraint(SpringLayout.WEST, label, 5, SpringLayout.WEST, cPane);
+		layout.putConstraint(SpringLayout.NORTH, label, 5, SpringLayout.NORTH, cPane);
+		
+		layout.putConstraint(SpringLayout.WEST, scrollPane, 5, SpringLayout.WEST, cPane);
+		layout.putConstraint(SpringLayout.EAST, scrollPane, -5, SpringLayout.EAST, cPane);
+		layout.putConstraint(SpringLayout.NORTH, scrollPane, 35, SpringLayout.NORTH, cPane);
+		layout.putConstraint(SpringLayout.SOUTH, scrollPane, -5, SpringLayout.SOUTH, cPane);
+		
+		// Display guiWindow
+		
+		aboutWindow.pack();
+		aboutWindow.setVisible(true);
+	}
+	
 	// question: why do i need this here, when i already used it above?
 	
 	public void actionPerformed(ActionEvent e) {
