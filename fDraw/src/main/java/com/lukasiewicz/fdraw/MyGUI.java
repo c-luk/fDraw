@@ -6,8 +6,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,13 +22,11 @@ public class MyGUI extends JFrame implements ActionListener {
 
 		//Window setup
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		Dimension dim_min = new Dimension(dim.width/3, dim.height/3);
-		Dimension dim_max = new Dimension(dim.width*100/75, dim.height*100/75);
+		Dimension dim_min = new Dimension(dim.width/2, dim.height/2);
 		JFrame guiWindow = new JFrame();
 		guiWindow.setMinimumSize(dim_min);
-		guiWindow.setMaximumSize(dim_max);
 		guiWindow.setTitle("fDraw 0.43");
-		guiWindow.setSize(dim.width/2, dim.height/2);
+		guiWindow.setSize(dim_min);
 		guiWindow.setLocationRelativeTo(null);
 		
 		//JMenu setup
@@ -38,7 +34,6 @@ public class MyGUI extends JFrame implements ActionListener {
 		JMenu menu;
 		JMenuItem saveItem;
 		JMenuItem exitItem;
-		
 		menuBar = new JMenuBar();
 	
 		//File menu
@@ -59,7 +54,9 @@ public class MyGUI extends JFrame implements ActionListener {
 			}
 		});
 		menu.add(saveItem);
-				
+		
+		// Separator between Menus 
+		
 		menu.addSeparator();
 		
 			//	Exit
@@ -74,17 +71,14 @@ public class MyGUI extends JFrame implements ActionListener {
 		});
 		menu.add(exitItem);		
 	
+		// Set operation for closing window
+		
+		guiWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		// Set JMenu to guiWindow
+		
 		guiWindow.setJMenuBar(menuBar);
-	
-		// Exit app when window closed
-		
-		guiWindow.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent evt) {
-				System.exit(0);
-			}
-		});
-		
+
 		// Setup SpringLayout
 		
 		Container cPane = guiWindow.getContentPane();

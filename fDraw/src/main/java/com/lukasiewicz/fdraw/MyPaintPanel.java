@@ -77,11 +77,16 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     	  }
     }
   
-    // Mouse event for dragging a box
+    // Mouse events for dragging a box
     
     public void mouseDragged(MouseEvent evt) {
     	int x = evt.getX();
     	int y = evt.getY();
+    	
+    	if (x > this.getWidth()-80 || x < 20) { return; }
+    	
+    	if (y > this.getHeight()-80 || y < 20) { return; }
+
     	if (currentBoxIndex >= 0) {
     		Graphics graphics = getGraphics();
     		graphics.setXORMode(getBackground());
@@ -97,7 +102,6 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);       
-        //g.drawString("Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!",10,20);
         
         for (int i = 0; i < currentNumberOfBoxes; i++) {
         	((Graphics2D) g).draw(box[i]);
