@@ -24,7 +24,9 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
    	    
     public MyPaintPanel() {
     	
-		// create subtile and nice border outline
+    	// create subtile and nice border outline
+    	
+    	//setBackground(new Color(25,25,25));
     	
     	setBorder(BorderFactory.createLineBorder(Color.black));
      
@@ -44,6 +46,11 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
                 	addBox(x, y);
                }
             }
+        	
+        	@Override
+        	public void mouseReleased(MouseEvent evt) {
+        		dragging = false;
+   		    }
             
         	// When mouse is doubleclicked on a box, remove that box
         	
@@ -90,7 +97,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);       
-        g.drawString("Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!",10,20);
+        //g.drawString("Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!",10,20);
         
         for (int i = 0; i < currentNumberOfBoxes; i++) {
         	((Graphics2D) g).draw(box[i]);

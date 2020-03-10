@@ -10,10 +10,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+import javax.swing.SpringLayout;
 
 @SuppressWarnings("serial")
 public class MyGUI extends JFrame implements ActionListener {
@@ -22,16 +24,14 @@ public class MyGUI extends JFrame implements ActionListener {
 
 		//Window setup
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		Dimension dim_minimum = new Dimension(dim.width/3, dim.height/3);
-		Dimension dim_maximum = new Dimension(dim.width*100/75, dim.height*100/75);
+		Dimension dim_min = new Dimension(dim.width/3, dim.height/3);
+		Dimension dim_max = new Dimension(dim.width*100/75, dim.height*100/75);
 		JFrame guiWindow = new JFrame();
-		guiWindow.setMinimumSize(dim_minimum);
-		guiWindow.setMaximumSize(dim_maximum);
-		guiWindow.pack();
+		guiWindow.setMinimumSize(dim_min);
+		guiWindow.setMaximumSize(dim_max);
 		guiWindow.setTitle("fDraw 0.43");
 		guiWindow.setSize(dim.width/2, dim.height/2);
 		guiWindow.setLocationRelativeTo(null);
-		
 		
 		//JMenu setup
 		JMenuBar menuBar;
@@ -85,10 +85,29 @@ public class MyGUI extends JFrame implements ActionListener {
 			}
 		});
 		
-		// Display GUI window
+		// Setup SpringLayout
 		
 		Container cPane = guiWindow.getContentPane();
-		cPane.add(new MyPaintPanel());
+		SpringLayout layout = new SpringLayout();
+		cPane.setLayout(layout);
+		
+		MyPaintPanel paintArea = new MyPaintPanel();
+		paintArea.setSize(dim_min);
+		cPane.add(paintArea);
+		
+		JLabel label = new JLabel("Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!");
+		cPane.add(label);
+		
+		layout.putConstraint(SpringLayout.WEST, label, 5, SpringLayout.WEST, cPane);
+		layout.putConstraint(SpringLayout.NORTH, label, 5, SpringLayout.NORTH, cPane);
+		layout.putConstraint(SpringLayout.WEST, paintArea, 30, SpringLayout.WEST, cPane);
+		layout.putConstraint(SpringLayout.NORTH, paintArea, 30, SpringLayout.NORTH, cPane);
+		layout.putConstraint(SpringLayout.EAST, cPane, 5, SpringLayout.EAST, paintArea);
+		layout.putConstraint(SpringLayout.SOUTH, cPane, 5, SpringLayout.SOUTH, paintArea);
+
+		// Display guiWindow
+		
+		guiWindow.pack();
 		guiWindow.setVisible(true);
 	}
 
