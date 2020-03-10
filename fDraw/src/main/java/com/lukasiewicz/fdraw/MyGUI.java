@@ -22,12 +22,11 @@ public class MyGUI extends JFrame implements ActionListener {
 
 		//Window setup
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		Dimension dim_minimum = dim;
-		dim_minimum.height = dim.height/3;
-		dim_minimum.width = dim.width/3;
+		Dimension dim_minimum = new Dimension(dim.width/3, dim.height/3);
+		Dimension dim_maximum = new Dimension(dim.width*100/75, dim.height*100/75);
 		JFrame guiWindow = new JFrame();
 		guiWindow.setMinimumSize(dim_minimum);
-		guiWindow.setMaximumSize(dim);
+		guiWindow.setMaximumSize(dim_maximum);
 		guiWindow.pack();
 		guiWindow.setTitle("fDraw 0.43");
 		guiWindow.setSize(dim.width/2, dim.height/2);
