@@ -1,12 +1,14 @@
 package com.lukasiewicz.fdraw;
 
 import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -20,6 +22,9 @@ import javax.swing.SpringLayout;
 @SuppressWarnings("serial")
 public class MyGUI extends JFrame implements ActionListener {
 
+	static String labelText = "Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!";
+	static JLabel label = new JLabel(labelText);
+	
 	public static void createAndShowGUI() {
 
 		// Window setup
@@ -29,7 +34,6 @@ public class MyGUI extends JFrame implements ActionListener {
 		guiWindow.setMinimumSize(dim_min);
 		guiWindow.setTitle("fDraw 0.43");
 		guiWindow.setSize(dim_min);
-		guiWindow.setLocationRelativeTo(null);
 		
 		// JMenu setup
 		JMenuBar menuBar;
@@ -86,12 +90,12 @@ public class MyGUI extends JFrame implements ActionListener {
 		aboutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
 		aboutItem.getAccessibleContext().setAccessibleDescription("Displays the about text.");
 		aboutItem.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent evt) {
-		// Displays about window
-			createAndShowAboutWindow();
-		}
-	});
-	menu.add(aboutItem);
+			public void actionPerformed(ActionEvent evt) {
+				// Displays about window
+				createAndShowAboutWindow(guiWindow, "About fDraw 0.43");
+			}
+		});
+		menu.add(aboutItem);
 	
 		// Set operation for closing window
 		
@@ -107,7 +111,6 @@ public class MyGUI extends JFrame implements ActionListener {
 		SpringLayout layout = new SpringLayout();
 		cPane.setLayout(layout);
 		
-		JLabel label = new JLabel("Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!");
 		cPane.add(label);
 		
 		MyToolBar toolBar = new MyToolBar();
@@ -134,40 +137,37 @@ public class MyGUI extends JFrame implements ActionListener {
 		// Display guiWindow
 		
 		guiWindow.pack();
+		guiWindow.setLocationRelativeTo(null);
 		guiWindow.setVisible(true);
 	}
 
-	private static void createAndShowAboutWindow() {
+	private static void createAndShowAboutWindow(JFrame parentFrame, String title) {
 		
-		// Window setup
-		JFrame aboutWindow = new JFrame();
-		aboutWindow.setTitle("About");
-		aboutWindow.setLocationRelativeTo(null);
-		aboutWindow.setMinimumSize(new Dimension(300,250));
+		final JDialog aboutDialog = new JDialog(parentFrame, title, Dialog.ModalityType.DOCUMENT_MODAL);
+        
+		// Setup Container and JTextArea
 		
-		// Setup SpringLayout
-		
-		Container cPane = aboutWindow.getContentPane();
+		Container cPane = aboutDialog.getContentPane();
 		SpringLayout layout = new SpringLayout();
 		cPane.setLayout(layout);
 		
-		JLabel label = new JLabel("About fDraw 0.43");
+		JLabel label = new JLabel("About");
 		cPane.add(label);
 		
 		JTextArea aboutText = new JTextArea();
         aboutText.setEditable(false);
-        //aboutText.setOpaque(false);
         
         aboutText.append("Welcome to the about page."+"\n\n");
         aboutText.append("Here you will learn more about this app."+"\n");
         aboutText.append("...once there is something to learn about."+"\n\n");
         aboutText.append("actually, it's a rather simple app with only two buttons..."+"\n");
-        aboutText.append("you'll figure it out all by yourself. i'm sure of it."+"\n");
+        aboutText.append("you'll figure it out all by yourself. i'm sure of it."+"\n\n");
         aboutText.append("good luck.");
         
-        
-        JScrollPane scrollPane = new JScrollPane(aboutText);
+		JScrollPane scrollPane = new JScrollPane(aboutText);
         cPane.add(scrollPane);
+
+        // Setup Spring Layout
         
 		layout.putConstraint(SpringLayout.WEST, label, 5, SpringLayout.WEST, cPane);
 		layout.putConstraint(SpringLayout.NORTH, label, 5, SpringLayout.NORTH, cPane);
@@ -178,12 +178,18 @@ public class MyGUI extends JFrame implements ActionListener {
 		layout.putConstraint(SpringLayout.SOUTH, scrollPane, -5, SpringLayout.SOUTH, cPane);
 		
 		// Display guiWindow
-		
-		aboutWindow.pack();
-		aboutWindow.setVisible(true);
+
+		aboutDialog.pack();
+		aboutDialog.setLocationRelativeTo(parentFrame);
+		aboutDialog.setMinimumSize(new Dimension(320,250));
+		aboutDialog.setVisible(true);
 	}
 	
 	// question: why do i need this here, when i already used it above?
+	
+	public static void setLabelText (String labelText) {
+		label.setText(labelText);
+	}
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

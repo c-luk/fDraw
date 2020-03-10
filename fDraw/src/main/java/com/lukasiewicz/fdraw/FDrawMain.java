@@ -12,7 +12,7 @@ public class FDrawMain {
 	
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new MyGUI();
+            	new MyGUI();
                 MyGUI.createAndShowGUI();
             }
         });
