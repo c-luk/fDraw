@@ -142,7 +142,7 @@ public class MyToolBar extends JPanel implements ActionListener {
         if (DRAW_LINE.equals(cmd)) { 
         	// User wants to draw a line
         	MyPaintPanel.drawingTool = 2;
-        	MyGUI.setLabelText("You wanna draw a line? Ha! - it's buggy for now, buh.");
+        	MyGUI.setLabelText("You wanna draw a line? Ha! - okay, go for it!.");
         } else if (DRAW_RECTANGLE.equals(cmd)) { 
         	// Users wants to draw a rectangle
         	MyPaintPanel.drawingTool = 1;
