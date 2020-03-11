@@ -30,8 +30,8 @@ public class MyGUI extends JFrame implements ActionListener {
 
 		// Window setup
 		
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		Dimension dim_min = new Dimension(dim.width/2, dim.height/2);
+		//Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		Dimension dim_min = new Dimension(800,600);
 		JFrame guiWindow = new JFrame();
 		guiWindow.setMinimumSize(dim_min);
 		guiWindow.setTitle("fDraw " + appversion);

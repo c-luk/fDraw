@@ -112,7 +112,7 @@ public class MyToolBar extends JPanel implements ActionListener {
 	    });
 	    
 		// Give them buttons a little space
-	    toolBar.addSeparator(new Dimension(15,265));
+	    toolBar.addSeparator(new Dimension(15,340));
 	    
 	    // Button for deleting the stuff
 	    deleteButton = makeButton("DeleteButton", DELETE, "Delete my creation", "Delete");
