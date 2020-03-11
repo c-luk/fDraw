@@ -24,7 +24,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     public static int drawingTool = 1;
     
     Point startDrag, endDrag;
-    ArrayList<Shape> shapes = new ArrayList<Shape>();
+    public static ArrayList<Shape> shapes = new ArrayList<Shape>();
    	    
     public MyPaintPanel() {
     	
@@ -67,10 +67,13 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         addMouseMotionListener(this);
     }
     
+    // Mouse draggin event   
+    
     public void mouseDragged(MouseEvent evt) {
 		endDrag = new Point(evt.getX(), evt.getY());
         repaint();	
     }
+    
     
     // Paint method
     

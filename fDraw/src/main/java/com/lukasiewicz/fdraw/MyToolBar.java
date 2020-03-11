@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,8 +22,10 @@ public class MyToolBar extends JPanel implements ActionListener {
 	
     static final private String DRAW_LINE = "Line";
     static final private String DRAW_RECTANGLE = "Rectangle";
+    static final private String DELETE = "Delete";
     static private JButton rectangleButton = null;
     static private JButton lineButton = null;
+    static private JButton deleteButton = null;
     static private Color buttonBackground = new Color(230,230,230);
     static private boolean rectangleButtonPressed = true;
     static private boolean lineButtonPressed = false;
@@ -108,6 +111,13 @@ public class MyToolBar extends JPanel implements ActionListener {
 			}
 	    });
 	    
+		// Give them buttons a little space
+	    toolBar.addSeparator(new Dimension(15,265));
+	    
+	    // Button for deleting the stuff
+	    deleteButton = makeButton("DeleteButton", DELETE, "Delete my creation", "Delete");
+	    toolBar.add(deleteButton);
+	    
         add(toolBar, BorderLayout.PAGE_START);
 	}
 	
@@ -146,8 +156,14 @@ public class MyToolBar extends JPanel implements ActionListener {
         } else if (DRAW_RECTANGLE.equals(cmd)) { 
         	// Users wants to draw a rectangle
         	MyPaintPanel.drawingTool = 1;
-        	MyGUI.setLabelText("Draw colored rectangles! Red at first, then green and at last blue.");
+        	MyGUI.setLabelText("Draw colored rectangles! Red at first, then green and blue at last. Repeat.");
+        } else if (DELETE.equals(cmd)) {
+        	// User wants to delete the creation
+        	MyPaintPanel.shapes.clear();
+        	MyGUI.repaintWindow();
         }
-
-	}	
+	}
+	public void paintComponent(Graphics g) {    
+	    super.paintComponent(g);       
+	}  
 }

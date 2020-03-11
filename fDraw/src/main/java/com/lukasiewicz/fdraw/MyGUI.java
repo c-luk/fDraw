@@ -24,10 +24,12 @@ public class MyGUI extends JFrame implements ActionListener {
 
 	static String labelText = "Draw colored rectangles! Red at first, then green and blue at last. Repeat.";
 	static JLabel label = new JLabel(labelText);
+	static MyPaintPanel paintArea = new MyPaintPanel();
 	
 	public static void createAndShowGUI(String appversion) {
 
 		// Window setup
+		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension dim_min = new Dimension(dim.width/2, dim.height/2);
 		JFrame guiWindow = new JFrame();
@@ -36,6 +38,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		guiWindow.setSize(dim_min);
 		
 		// JMenu setup
+		
 		JMenuBar menuBar;
 		JMenu menu;
 		JMenuItem saveItem;
@@ -44,6 +47,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		menuBar = new JMenuBar();
 	
 		// File menu
+		
 		menu = new JMenu("File");
 		menu.setMnemonic(KeyEvent.VK_F);
 		menu.getAccessibleContext().setAccessibleDescription("File menu");
@@ -52,7 +56,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		// File menu items
 		
 			//	Save
-		saveItem = new JMenuItem("Save (not yet implemented)", KeyEvent.VK_S);
+		saveItem = new JMenuItem("Save (not implemented yet)", KeyEvent.VK_S);
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 		saveItem.getAccessibleContext().setAccessibleDescription("Saves your wonderful drawing.");
 		saveItem.addActionListener(new ActionListener() {
@@ -105,7 +109,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		
 		guiWindow.setJMenuBar(menuBar);
 
-		// Setup SpringLayout
+		// Setup SpringLayout and add PaintArea and ToolBar
 		
 		Container cPane = guiWindow.getContentPane();
 		SpringLayout layout = new SpringLayout();
@@ -116,7 +120,6 @@ public class MyGUI extends JFrame implements ActionListener {
 		MyToolBar toolBar = new MyToolBar();
 		cPane.add(toolBar);
 		
-		MyPaintPanel paintArea = new MyPaintPanel();
 		paintArea.setSize(dim_min);
 		cPane.add(paintArea);
 		
@@ -160,7 +163,7 @@ public class MyGUI extends JFrame implements ActionListener {
         aboutText.append("Welcome to the about page."+"\n\n");
         aboutText.append("Here you will learn more about this app."+"\n");
         aboutText.append("...once there is something to learn about."+"\n\n");
-        aboutText.append("actually, it's a rather simple app with only two buttons..."+"\n");
+        aboutText.append("actually, it's a rather simple app with only three buttons..."+"\n");
         aboutText.append("you'll figure it out all by yourself. i'm sure of it."+"\n\n");
         aboutText.append("good luck.");
         
@@ -191,10 +194,14 @@ public class MyGUI extends JFrame implements ActionListener {
 		label.setText(labelText);
 	}
 	
+    // Repaint painting area 
+    public static void repaintWindow() {
+		paintArea.repaint();
+    }
+	
 	// question: why do i need this ActionEvent here, when i already used it above?
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 }

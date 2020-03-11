@@ -40,6 +40,7 @@
         <includes>
           <include>LineButton.png</include>
           <include>RectangleButton.png</include>
+          <include>DeleteButton.png</include>
         </includes>
       </resource>
     </resources>
