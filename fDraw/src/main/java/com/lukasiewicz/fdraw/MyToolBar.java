@@ -102,7 +102,7 @@ public class MyToolBar extends JPanel implements ActionListener {
 	}
 	
     protected JButton makeButton(String imageName, String actionCommand, String toolTipText, String altText) {
-    	String imgLocation =  "/images/" + imageName + ".png";
+    	String imgLocation =  "/" + imageName + ".png";
 		URL imageURL = this.getClass().getResource(imgLocation);
 		
 		final JButton button = new JButton();
