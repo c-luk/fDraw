@@ -22,7 +22,7 @@ import javax.swing.SpringLayout;
 @SuppressWarnings("serial")
 public class MyGUI extends JFrame implements ActionListener {
 
-	static String labelText = "Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!";
+	static String labelText = "Draw colored rectangles! Red at first, then green and blue at last. Repeat.";
 	static JLabel label = new JLabel(labelText);
 	
 	public static void createAndShowGUI(String appversion) {
