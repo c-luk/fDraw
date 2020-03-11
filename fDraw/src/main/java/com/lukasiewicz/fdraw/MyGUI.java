@@ -185,11 +185,13 @@ public class MyGUI extends JFrame implements ActionListener {
 		aboutDialog.setVisible(true);
 	}
 	
-	// question: why do i need this here, when i already used it above?
+	// Method for changing the label text
 	
 	public static void setLabelText (String labelText) {
 		label.setText(labelText);
 	}
+	
+	// question: why do i need this ActionEvent here, when i already used it above?
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
