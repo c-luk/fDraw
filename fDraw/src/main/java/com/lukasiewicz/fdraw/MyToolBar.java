@@ -2,6 +2,7 @@ package com.lukasiewicz.fdraw;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -57,12 +58,14 @@ public class MyToolBar extends JPanel implements ActionListener {
 	        }
 	        @Override
 	        public void mouseEntered(MouseEvent e) {
+	        	setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	        }
 			@Override
 			public void mouseReleased(MouseEvent e) {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
+	    		setCursor(Cursor.getDefaultCursor());
 			}
 	    });
 	    
@@ -89,12 +92,14 @@ public class MyToolBar extends JPanel implements ActionListener {
 	        }
 	        @Override
 	        public void mouseEntered(MouseEvent e) {
+	        	setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 	        }
 			@Override
 			public void mouseReleased(MouseEvent e) {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
+	    		setCursor(Cursor.getDefaultCursor());
 			}
 	    });
 	    
