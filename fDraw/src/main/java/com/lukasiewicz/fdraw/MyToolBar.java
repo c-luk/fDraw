@@ -3,6 +3,8 @@ package com.lukasiewicz.fdraw;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -69,6 +71,9 @@ public class MyToolBar extends JPanel implements ActionListener {
 			}
 	    });
 	    
+		// Give them buttons a little space
+	    toolBar.addSeparator(new Dimension(15,10));
+	    
 		// Button for makin' lines
 	    lineButton = makeButton("LineButton", DRAW_LINE, "Draw a fine line", "Line");
 	    toolBar.add(lineButton);
@@ -116,6 +121,7 @@ public class MyToolBar extends JPanel implements ActionListener {
 		button.setSize(32,32);
 		button.setBackground(buttonBackground);
 		button.setFocusPainted(false);
+		button.setMargin(new Insets(2, 2, 2, 2));
 		button.addActionListener(this);
 		
 		if (imageURL != null) {
