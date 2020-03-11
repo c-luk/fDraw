@@ -13,7 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class MyPaintPanel extends JPanel implements MouseMotionListener {	
+public class MyPaintPanel extends JPanel implements MouseMotionListener {
 	
     private static final int boxSideLength = 64;
     private static final int maxBoxes = 3;
@@ -26,9 +26,13 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
    	    
     public MyPaintPanel() {
     	
-    	// create subtile and nice border outline
+    	// Create subtile and nice border outline
     	
     	setBorder(BorderFactory.createLineBorder(Color.black));
+    	
+    	// Set background to a nice light color
+
+    	setBackground(new Color(250,250,250));
      
     	// Mouse events for adding and removing boxes
     	
@@ -41,8 +45,12 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
             	int x = evt.getX();
             	int y = evt.getY();
             	dragging = true;
+            	
+            	
                 currentBoxIndex = getBox(x, y);
-                if (currentBoxIndex < 0) {             
+                if (currentBoxIndex < 0 &&
+                	!(x > getWidth()-safetyBorder || x < safetyBorder) &&
+        			!(y > getHeight()-safetyBorder || y < safetyBorder)) {
                 	addBox(x, y);
                }
             }
