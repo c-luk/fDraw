@@ -39,16 +39,10 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
             
         	@Override
         	public void mousePressed(MouseEvent evt) {
-        		
-        		if(drawingTool==1) {
-        			startDrag = new Point(evt.getX(), evt.getY());
-                    endDrag = startDrag;
-                    repaint();	
-        		} else {
-        			startDrag = new Point(evt.getX(), evt.getY());
-                    endDrag = startDrag;
-                    repaint();
-        		}
+
+        		startDrag = new Point(evt.getX(), evt.getY());
+                endDrag = startDrag;
+                repaint();	
         	}
         	
         	@Override
@@ -115,14 +109,16 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         }
     }
     
-    // return Rectangle
+    // Return rectangle
     
     private Rectangle2D.Float makeRectangle(int x1, int y1, int x2, int y2) {
         return new Rectangle2D.Float(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
     }
     
+    // Return line
+    
     private Line2D.Float makeLine(int x1, int y1, int x2, int y2) {
-        return new Line2D.Float(x1, x2, y1, y2);
+        return new Line2D.Float(x1, y1, x2, y2);
     }
     
 	@Override
