@@ -1,13 +1,19 @@
 package com.lukasiewicz.fdraw;
 
+import java.awt.AlphaComposite;
+import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -15,133 +21,112 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class MyPaintPanel extends JPanel implements MouseMotionListener {
 	
-    private static final int boxSideLength = 64;
-    private static final int maxBoxes = 3;
-    private Rectangle[] box = new Rectangle[maxBoxes];
-    private int currentNumberOfBoxes = 0;
-    private int currentBoxIndex = -1;
-    boolean dragging = false;
-    private int safetyBorder = 40;
-    public static int drawingtool = 1;
+    public static int drawingTool = 1;
+    
+    Point startDrag, endDrag;
+    ArrayList<Shape> shapes = new ArrayList<Shape>();
    	    
     public MyPaintPanel() {
     	
-    	// Create subtile and nice border outline
+    	// Setup PainPanel
     	
     	setBorder(BorderFactory.createLineBorder(Color.black));
-    	
-    	// Set background to a nice light color
-
     	setBackground(new Color(250,250,250));
      
-    	// Mouse events for adding and removing boxes
+    	// Mouse events
     	
         addMouseListener(new MouseAdapter() {
             
-        	// When mouse pressed, add a box to screen if < maxBoxes
-        	
         	@Override
         	public void mousePressed(MouseEvent evt) {
-            	int x = evt.getX();
-            	int y = evt.getY();
-            	dragging = true;
-            	
-            	
-                currentBoxIndex = getBox(x, y);
-                if (currentBoxIndex < 0 &&
-                	!(x > getWidth()-safetyBorder || x < safetyBorder) &&
-        			!(y > getHeight()-safetyBorder || y < safetyBorder)) {
-                	addBox(x, y);
-               }
-            }
+        		
+        		if(drawingTool==1) {
+        			startDrag = new Point(evt.getX(), evt.getY());
+                    endDrag = startDrag;
+                    repaint();	
+        		} else {
+        			startDrag = new Point(evt.getX(), evt.getY());
+                    endDrag = startDrag;
+                    repaint();
+        		}
+        	}
         	
         	@Override
         	public void mouseReleased(MouseEvent evt) {
-        		dragging = false;
-   		    }
-            
-        	// When mouse is doubleclicked on a box, remove that box
-        	
-        	@Override
-            public void mouseClicked(MouseEvent evt) {
-                if (evt.getClickCount() >= 2) {
-                	remove(currentBoxIndex);
-                }
-            }
+        		
+        		if(drawingTool==1) {
+        			Shape r = makeRectangle(startDrag.x, startDrag.y, evt.getX(), evt.getY());
+                    shapes.add(r);
+                    startDrag = null;
+                    endDrag = null;
+                    repaint();	
+        		} else {
+        			Shape l = makeLine(startDrag.x, startDrag.y, evt.getX(), evt.getY());
+                    shapes.add(l);
+                    startDrag = null;
+                    endDrag = null;
+                    repaint();	
+        		}
+        	}
         });
         
         addMouseMotionListener(this);
     }
     
-    // Mouse event for setting cursor to crosshair when mouseover a box
-    
-    public void mouseMoved(MouseEvent evt) {
-    	int x = evt.getX();
-    	int y = evt.getY();
-    	if (getBox(x, y) >= 0) {
-    		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-    	} else {
-    		setCursor(Cursor.getDefaultCursor());
-    	  }
-    }
-  
-    // Mouse events for dragging a box
-    
     public void mouseDragged(MouseEvent evt) {
-    	int x = evt.getX();
-    	int y = evt.getY();
-    	
-    	if (currentBoxIndex >= 0 && 
-    			!(x > this.getWidth()-safetyBorder || x < safetyBorder) &&
-    			!(y > this.getHeight()-safetyBorder || y < safetyBorder)) {
-    		Graphics graphics = getGraphics();
-    		graphics.setXORMode(getBackground());
-    		((Graphics2D) graphics).draw(box[currentBoxIndex]);
-    		box[currentBoxIndex].x = x-boxSideLength/2;
-    		box[currentBoxIndex].y = y-boxSideLength/2;
-    		((Graphics2D) graphics).draw(box[currentBoxIndex]);
-    		graphics.dispose();
-    		repaint();
-    	}
+		endDrag = new Point(evt.getX(), evt.getY());
+        repaint();	
     }
+    
+    // Paint method
     
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);       
         
-        for (int i = 0; i < currentNumberOfBoxes; i++) {
-        	((Graphics2D) g).draw(box[i]);
+    	super.paintComponent(g);
+        
+        ((Graphics2D) g).setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        Color[] colors = { Color.RED, Color.GREEN, Color.BLUE};
+        int colorIndex = 0;
+
+        ((Graphics2D) g).setStroke(new BasicStroke(2));
+        ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.50f));
+
+        for (Shape s : shapes) {
+          ((Graphics2D) g).setPaint(Color.BLACK);
+          ((Graphics2D) g).draw(s);
+          ((Graphics2D) g).setPaint(colors[(colorIndex++) % 3]);
+          ((Graphics2D) g).fill(s);
+        }
+
+        if (drawingTool==1) {
+        	if (startDrag != null && endDrag != null) {
+                ((Graphics2D) g).setPaint(Color.LIGHT_GRAY);
+                Shape r = makeRectangle(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
+                ((Graphics2D) g).draw(r);
+              }
+        }
+        if (drawingTool==2) {
+        	if (startDrag != null && endDrag != null) {
+                ((Graphics2D) g).setPaint(Color.LIGHT_GRAY);
+                Shape l = makeLine(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
+                ((Graphics2D) g).draw(l);
+              }
         }
     }
-
-    private int getBox(int x, int y) {
-    	for (int i = 0; i < currentNumberOfBoxes; i++) {
-    		if (box[i].contains(x, y)) {
-        	    return i;
-        	}
-    	}
-        return -1;
-    }
-
-    private void addBox(int x, int y) {
-    	if (currentNumberOfBoxes < maxBoxes) {
-        	box[currentNumberOfBoxes] = new Rectangle(x-boxSideLength/2, y-boxSideLength/2, boxSideLength, boxSideLength);
-        	currentBoxIndex = currentNumberOfBoxes;
-        	currentNumberOfBoxes++;
-        	repaint();
-    	}
+    
+    // return Rectangle
+    
+    private Rectangle2D.Float makeRectangle(int x1, int y1, int x2, int y2) {
+        return new Rectangle2D.Float(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
     }
     
-    @Override
-    public void remove(int n) {
-    	if (n < 0 || n >= currentNumberOfBoxes) {
-        	return;
-    	}
-    	currentNumberOfBoxes--;
-    	box[n] = box[currentNumberOfBoxes];
-    	if (currentBoxIndex == n) {
-        	currentBoxIndex = -1;
-    	}
-    	repaint();
+    private Line2D.Float makeLine(int x1, int y1, int x2, int y2) {
+        return new Line2D.Float(Math.min(x1, x2), Math.min(y1, y2), Math.abs(x1 - x2), Math.abs(y1 - y2));
     }
+    
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+	}
 }
