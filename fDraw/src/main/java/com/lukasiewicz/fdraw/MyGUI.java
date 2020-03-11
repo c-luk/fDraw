@@ -25,14 +25,14 @@ public class MyGUI extends JFrame implements ActionListener {
 	static String labelText = "Draw (click) up to 3 boxes - drag 'em - doubleclick to remove one!";
 	static JLabel label = new JLabel(labelText);
 	
-	public static void createAndShowGUI() {
+	public static void createAndShowGUI(String appversion) {
 
 		// Window setup
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension dim_min = new Dimension(dim.width/2, dim.height/2);
 		JFrame guiWindow = new JFrame();
 		guiWindow.setMinimumSize(dim_min);
-		guiWindow.setTitle("fDraw 0.43");
+		guiWindow.setTitle("fDraw " + appversion);
 		guiWindow.setSize(dim_min);
 		
 		// JMenu setup
@@ -92,7 +92,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		aboutItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				// Displays about window
-				createAndShowAboutWindow(guiWindow, "About fDraw 0.43");
+				createAndShowAboutWindow(guiWindow, "About fDraw " + appversion);
 			}
 		});
 		menu.add(aboutItem);
