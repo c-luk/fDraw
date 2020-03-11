@@ -3,7 +3,7 @@ package com.lukasiewicz.fdraw;
 /**
  * 				fDraw - a simple app for learning/testing purposes
  * @author      Christoph Lukasiewicz <lukasiewicz@gmx.at>
- * @version     0.42
+ * @version     0.43
  */
 
 public class FDrawMain {
