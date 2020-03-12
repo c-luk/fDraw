@@ -48,20 +48,6 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         	@Override
         	public void mouseReleased(MouseEvent evt) {
         		
-/*        		if(drawingTool==1) {
-        			Shape r = makeRectangle(startDrag.x, startDrag.y, evt.getX(), evt.getY());
-                    shapes.add(r);
-                    startDrag = null;
-                    endDrag = null;
-                    repaint();	
-        		} else {
-        			Shape l = makeLine(startDrag.x, startDrag.y, evt.getX(), evt.getY());
-                    shapes.add(l);
-                    startDrag = null;
-                    endDrag = null;
-                    repaint();	
-        		} */
-        		
         		switch(drawingTool) {
         		case 1:
         			Shape r = makeRectangle(startDrag.x, startDrag.y, evt.getX(), evt.getY());
