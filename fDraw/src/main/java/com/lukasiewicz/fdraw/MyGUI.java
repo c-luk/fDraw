@@ -148,7 +148,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		
 		final JDialog aboutDialog = new JDialog(parentFrame, title, Dialog.ModalityType.DOCUMENT_MODAL);
         
-		// Setup Container and JTextArea
+		// Setup Container, JLabel and JTextArea
 		
 		Container cPane = aboutDialog.getContentPane();
 		SpringLayout layout = new SpringLayout();
@@ -180,7 +180,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		layout.putConstraint(SpringLayout.NORTH, scrollPane, 35, SpringLayout.NORTH, cPane);
 		layout.putConstraint(SpringLayout.SOUTH, scrollPane, -5, SpringLayout.SOUTH, cPane);
 		
-		// Display guiWindow
+		// Display aboutDialog
 
 		aboutDialog.pack();
 		aboutDialog.setLocationRelativeTo(parentFrame);
@@ -198,8 +198,6 @@ public class MyGUI extends JFrame implements ActionListener {
     public static void repaintWindow() {
 		paintArea.repaint();
     }
-	
-	// question: why do i need this ActionEvent here, when i already used it above?
 	
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,12 +22,15 @@ public class MyToolBar extends JPanel implements ActionListener {
     static final private String DRAW_LINE = "Line";
     static final private String DRAW_RECTANGLE = "Rectangle";
     static final private String DELETE = "Delete";
+    static final private String MOVE = "Move";
     static private JButton rectangleButton = null;
     static private JButton lineButton = null;
+    static private JButton moveButton = null;
     static private JButton deleteButton = null;
     static private Color buttonBackground = new Color(230,230,230);
     static private boolean rectangleButtonPressed = true;
     static private boolean lineButtonPressed = false;
+    static private boolean moveButtonPressed = false;
     
 	public MyToolBar() {
 		
@@ -51,7 +53,11 @@ public class MyToolBar extends JPanel implements ActionListener {
 	        	rectangleButton.setBackground(rectangleButton.getBackground().brighter());
 	        	if(lineButtonPressed) {
 	        		lineButton.setBackground(buttonBackground);
+	        	} else if(moveButtonPressed) {
+	        		moveButton.setBackground(buttonBackground);
 	        	}
+	        	lineButtonPressed=false;
+	        	moveButtonPressed=false;
 	        }
 	        @Override
 	        public void mouseClicked(MouseEvent e) {
@@ -59,7 +65,11 @@ public class MyToolBar extends JPanel implements ActionListener {
 	        	rectangleButton.setBackground(rectangleButton.getBackground().brighter());
 	        	if(lineButtonPressed) {
 	        		lineButton.setBackground(buttonBackground);
-	        	}	
+	        	} else if(moveButtonPressed) {
+	        		moveButton.setBackground(buttonBackground);
+	        	}
+	        	lineButtonPressed=false;
+	        	moveButtonPressed=false;
 	        }
 	        @Override
 	        public void mouseEntered(MouseEvent e) {
@@ -88,7 +98,11 @@ public class MyToolBar extends JPanel implements ActionListener {
 	        	lineButton.setBackground(lineButton.getBackground().brighter());
 	        	if(rectangleButtonPressed) {
 	        		rectangleButton.setBackground(buttonBackground);
+	        	} else if(moveButtonPressed) {
+	        		moveButton.setBackground(buttonBackground);
 	        	}
+	        	rectangleButtonPressed=false;
+	        	moveButtonPressed=false;
 	        }
 	        @Override
 	        public void mouseClicked(MouseEvent e) {
@@ -96,7 +110,11 @@ public class MyToolBar extends JPanel implements ActionListener {
 	        	lineButton.setBackground(lineButton.getBackground().brighter());
 	        	if(rectangleButtonPressed) {
 	        		rectangleButton.setBackground(buttonBackground);
+	        	} else if(moveButtonPressed) {
+	        		moveButton.setBackground(buttonBackground);
 	        	}
+	        	rectangleButtonPressed=false;
+	        	moveButtonPressed=false;
 	        }
 	        @Override
 	        public void mouseEntered(MouseEvent e) {
@@ -112,7 +130,52 @@ public class MyToolBar extends JPanel implements ActionListener {
 	    });
 	    
 		// Give them buttons a little space
-	    toolBar.addSeparator(new Dimension(15,265));
+	    toolBar.addSeparator(new Dimension(15,10));
+	    
+	    // Button for moving stuff
+	    moveButton = makeButton("MoveButton", MOVE, "Move a shape", "Move");
+	    toolBar.add(moveButton);
+	    
+	    moveButton.addMouseListener(new MouseListener() {
+	    	public void mousePressed(MouseEvent evt) {
+	        	moveButtonPressed=true;
+	        	moveButton.setBackground(moveButton.getBackground().brighter());
+	        	if(rectangleButtonPressed) {
+	        		rectangleButton.setBackground(buttonBackground);
+	        	} else if(lineButtonPressed) {
+	        		lineButton.setBackground(buttonBackground);
+	        	}
+	        	rectangleButtonPressed=false;
+	        	lineButtonPressed=false;
+	        }
+	        @Override
+	        public void mouseClicked(MouseEvent e) {
+	        	moveButtonPressed=true;
+	        	moveButton.setBackground(moveButton.getBackground().brighter());
+	        	if(rectangleButtonPressed) {
+	        		rectangleButton.setBackground(buttonBackground);
+	        	} else if(lineButtonPressed) {
+	        		lineButton.setBackground(buttonBackground);
+	        	}
+	        	rectangleButtonPressed=false;
+	        	lineButtonPressed=false;
+	        }
+			@Override
+			public void mouseReleased(MouseEvent e) {
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				setCursor(Cursor.getDefaultCursor());
+			}
+	    });
+	    
+	    
+		// Give them buttons a little space
+	    toolBar.addSeparator(new Dimension(15,220));
 	    
 	    // Button for deleting the stuff
 	    deleteButton = makeButton("DeleteButton", DELETE, "Delete my creation", "Delete");
@@ -148,22 +211,26 @@ public class MyToolBar extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent evt) {
 		String cmd = evt.getActionCommand();
 
-        // Handle each button.
-        if (DRAW_LINE.equals(cmd)) { 
-        	// User wants to draw a line
-        	MyPaintPanel.drawingTool = 2;
-        	MyGUI.setLabelText("You wanna draw a line? Ha! - okay, go for it!.");
-        } else if (DRAW_RECTANGLE.equals(cmd)) { 
-        	// Users wants to draw a rectangle
-        	MyPaintPanel.drawingTool = 1;
-        	MyGUI.setLabelText("Draw colored rectangles! Red at first, then green and blue at last. Repeat.");
-        } else if (DELETE.equals(cmd)) {
-        	// User wants to delete the creation
-        	MyPaintPanel.shapes.clear();
-        	MyGUI.repaintWindow();
+		// Button handling
+		
+        switch(cmd) {
+	        case DRAW_LINE:
+	        	MyPaintPanel.drawingTool = 2;
+	        	MyGUI.setLabelText("You wanna draw a line? Ha! - okay, go for it!.");
+	        	break;
+	        case DRAW_RECTANGLE:
+	        	MyPaintPanel.drawingTool = 1;
+	        	MyGUI.setLabelText("Draw colored rectangles! Red at first, then green and blue at last. Repeat.");
+	        	break;
+	        case MOVE:
+	        	MyPaintPanel.drawingTool = 3;
+	        	MyGUI.setLabelText("Move 'em all like there's no tomorrow! (not yet implemented)");
+	        	break;
+	        case DELETE:
+	        	MyPaintPanel.shapes.clear();
+	        	MyGUI.repaintWindow();
+	        	break;
+	        default:
         }
 	}
-	public void paintComponent(Graphics g) {    
-	    super.paintComponent(g);       
-	}  
 }

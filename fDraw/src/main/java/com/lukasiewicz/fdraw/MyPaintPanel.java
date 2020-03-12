@@ -48,7 +48,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         	@Override
         	public void mouseReleased(MouseEvent evt) {
         		
-        		if(drawingTool==1) {
+/*        		if(drawingTool==1) {
         			Shape r = makeRectangle(startDrag.x, startDrag.y, evt.getX(), evt.getY());
                     shapes.add(r);
                     startDrag = null;
@@ -60,6 +60,27 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
                     startDrag = null;
                     endDrag = null;
                     repaint();	
+        		} */
+        		
+        		switch(drawingTool) {
+        		case 1:
+        			Shape r = makeRectangle(startDrag.x, startDrag.y, evt.getX(), evt.getY());
+                    shapes.add(r);
+                    startDrag = null;
+                    endDrag = null;
+                    repaint();
+                    break;
+        		case 2:
+        			Shape l = makeLine(startDrag.x, startDrag.y, evt.getX(), evt.getY());
+                    shapes.add(l);
+                    startDrag = null;
+                    endDrag = null;
+                    repaint();
+                    break;
+        		case 3:
+        			// Move method to be implemented
+        			break;
+        		default:
         		}
         	}
         });
@@ -96,19 +117,22 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
           ((Graphics2D) g).fill(s);
         }
 
-        if (drawingTool==1) {
+        if (drawingTool==1) {	// drawingTool rectangle
         	if (startDrag != null && endDrag != null) {
                 ((Graphics2D) g).setPaint(Color.LIGHT_GRAY);
                 Shape r = makeRectangle(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                 ((Graphics2D) g).draw(r);
               }
         }
-        if (drawingTool==2) {
+        if (drawingTool==2) {	// drawingTool line
         	if (startDrag != null && endDrag != null) {
                 ((Graphics2D) g).setPaint(Color.LIGHT_GRAY);
                 Shape l = makeLine(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                 ((Graphics2D) g).draw(l);
               }
+        }
+        if (drawingTool==3) {	// drawingTool move
+        	
         }
     }
     

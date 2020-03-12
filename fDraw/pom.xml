@@ -41,6 +41,7 @@
           <include>LineButton.png</include>
           <include>RectangleButton.png</include>
           <include>DeleteButton.png</include>
+          <include>MoveButton.png</include>
         </includes>
       </resource>
     </resources>
