@@ -22,7 +22,10 @@ import javax.swing.JPanel;
 public class MyPaintPanel extends JPanel implements MouseMotionListener {
 	
     public static int drawingTool = 1;
-    
+	final int toolRectangle = 1;
+	final int toolLine = 2;
+	final int toolMove = 3;
+	
     Point startDrag, endDrag;
     public static ArrayList<Shape> shapes = new ArrayList<Shape>();
    	    
@@ -40,32 +43,39 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         	@Override
         	public void mousePressed(MouseEvent evt) {
 
-        		startDrag = new Point(evt.getX(), evt.getY());
-                endDrag = startDrag;
-                repaint();	
+        		if(drawingTool!=toolMove) {
+        			startDrag = new Point(evt.getX(), evt.getY());
+                    endDrag = startDrag;
+                    repaint();	
+        		}
         	}
         	
         	@Override
         	public void mouseReleased(MouseEvent evt) {
         		
         		switch(drawingTool) {
-        		case 1:
+        		
+        		case toolRectangle:
         			Shape r = makeRectangle(startDrag.x, startDrag.y, evt.getX(), evt.getY());
                     shapes.add(r);
                     startDrag = null;
                     endDrag = null;
                     repaint();
                     break;
-        		case 2:
+        		
+        		case toolLine:
         			Shape l = makeLine(startDrag.x, startDrag.y, evt.getX(), evt.getY());
                     shapes.add(l);
                     startDrag = null;
                     endDrag = null;
                     repaint();
                     break;
-        		case 3:
-        			// Move method to be implemented
+        		
+        		case toolMove:
+        			// Move algorithm to be implemented
+        			
         			break;
+        		
         		default:
         		}
         	}
@@ -80,7 +90,6 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
 		endDrag = new Point(evt.getX(), evt.getY());
         repaint();	
     }
-    
     
     // Paint method
     
@@ -102,23 +111,30 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
           ((Graphics2D) g).setPaint(colors[(colorIndex++) % 3]);
           ((Graphics2D) g).fill(s);
         }
-
-        if (drawingTool==1) {	// drawingTool rectangle
+        
+        switch (drawingTool) {
+        
+        case toolRectangle:
         	if (startDrag != null && endDrag != null) {
                 ((Graphics2D) g).setPaint(Color.LIGHT_GRAY);
                 Shape r = makeRectangle(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                 ((Graphics2D) g).draw(r);
-              }
-        }
-        if (drawingTool==2) {	// drawingTool line
+            }
+        	break;
+        
+        case toolLine:
         	if (startDrag != null && endDrag != null) {
                 ((Graphics2D) g).setPaint(Color.LIGHT_GRAY);
                 Shape l = makeLine(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                 ((Graphics2D) g).draw(l);
-              }
-        }
-        if (drawingTool==3) {	// drawingTool move
-        	
+            }
+        	break;
+        
+        case toolMove:
+        	// Move algorithm to be implemented
+        	break;
+        
+        default:
         }
     }
     
