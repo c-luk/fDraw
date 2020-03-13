@@ -34,6 +34,7 @@
   </dependencies>
 
   <build>
+
     <resources>
       <resource>
         <directory>src/main/resources/images</directory>
@@ -45,6 +46,30 @@
         </includes>
       </resource>
     </resources>
+    
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.6.0</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <executable>java</executable>
+          <arguments>
+            <argument>-classpath</argument>
+            <classpath/>
+            <argument>com.lukasiewicz.fdraw.FDrawMain</argument>
+          </arguments>
+        </configuration>
+      </plugin>
+    </plugins>
+
   </build>
 
   <properties>
@@ -52,5 +77,4 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
-
 </project>
