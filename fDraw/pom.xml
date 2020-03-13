@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.lukasiewicz</groupId>
   <artifactId>fDraw</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.45.0-SNAPSHOT</version>
 
   <organization>
     <name>Codehaus Lukasiewicz</name>
