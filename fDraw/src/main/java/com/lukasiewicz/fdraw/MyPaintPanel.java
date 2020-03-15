@@ -26,8 +26,8 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
 	final int toolRectangle = 1;
 	final int toolLine = 2;
 	final int toolMove = 3;
-	private int currentNumberOfShapes = 0;
-    //private int currentShapeIndex = -1;
+	public static int currentNumberOfShapes = 0;
+    public static int currentShapeIndex = -1;
 	
     Point startDrag, endDrag;
     public static ArrayList<Shape> shapes = new ArrayList<Shape>();
@@ -92,8 +92,28 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     // Mouse draggin event   
     
     public void mouseDragged(MouseEvent evt) {
-		endDrag = new Point(evt.getX(), evt.getY());
-        repaint();	
+    	
+    	int x = evt.getX();
+    	int y = evt.getY();
+    	
+    	switch(drawingTool) {
+    	case toolMove:
+    		if (currentShapeIndex >= 0) {
+        		Graphics graphics = getGraphics();
+        		graphics.setXORMode(getBackground());
+        		((Graphics2D) graphics).draw(shapes.get(currentShapeIndex));
+        		//shapes.get(currentShapeIndex).x = x-boxSideLength/2;
+        		//shapes.get(currentShapeIndex).y = y-boxSideLength/2;
+        		//((Graphics2D) graphics).draw(shapes.get(currentShapeIndex));
+        		graphics.dispose();
+        		repaint();
+        	}
+    		break;
+    	default:
+    		endDrag = new Point(x, y);
+            repaint();
+    	}
+    	
     }
     
     // Paint method
@@ -115,6 +135,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
           ((Graphics2D) g).draw(s);
           ((Graphics2D) g).setPaint(colors[(colorIndex++) % 3]);
           ((Graphics2D) g).fill(s);
+          currentShapeIndex++;
         }
         
         switch (drawingTool) {

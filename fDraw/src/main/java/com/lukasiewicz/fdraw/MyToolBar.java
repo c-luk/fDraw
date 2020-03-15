@@ -213,23 +213,26 @@ public class MyToolBar extends JPanel implements ActionListener {
 		// Button handling
 		
         switch(cmd) {
-	        case DRAW_LINE:
-	        	MyPaintPanel.drawingTool = 2;
-	        	MyGUI.setLabelText("You wanna draw a line? Ha! - okay, go for it!.");
-	        	break;
-	        case DRAW_RECTANGLE:
-	        	MyPaintPanel.drawingTool = 1;
-	        	MyGUI.setLabelText("Draw colored rectangles! Red at first, then green and blue at last. Repeat.");
-	        	break;
-	        case MOVE:
-	        	MyPaintPanel.drawingTool = 3;
-	        	MyGUI.setLabelText("Move 'em all like there's no tomorrow! (not yet implemented)");
-	        	break;
-	        case DELETE:
-	        	MyPaintPanel.shapes.clear();
-	        	MyGUI.repaintWindow();
-	        	break;
-	        default:
+        
+        case DRAW_RECTANGLE:
+        	MyPaintPanel.drawingTool = 1;
+        	MyGUI.setLabelText("Draw colored rectangles! Red at first, then green and blue at last. Repeat.");
+        	break;
+        case DRAW_LINE:
+        	MyPaintPanel.drawingTool = 2;
+        	MyGUI.setLabelText("You wanna draw a line? Ha! - okay, go for it!.");
+        	break;
+        case MOVE:
+        	MyPaintPanel.drawingTool = 3;
+        	MyGUI.setLabelText("Move 'em all like there's no tomorrow! (not yet implemented)");
+        	break;
+        case DELETE:
+        	MyPaintPanel.shapes.clear();
+        	MyPaintPanel.currentNumberOfShapes = 0;
+        	MyPaintPanel.currentShapeIndex = -1;
+        	MyGUI.repaintWindow();
+        	break;
+        default:
         }
 	}
 }
