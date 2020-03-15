@@ -224,7 +224,7 @@ public class MyToolBar extends JPanel implements ActionListener {
         	break;
         case MOVE:
         	MyPaintPanel.drawingTool = 3;
-        	MyGUI.setLabelText("Move 'em all like there's no tomorrow! (not yet implemented)");
+        	MyGUI.setLabelText("Move 'em all like there's no tomorrow! (not yet implemented the right way)");
         	break;
         case DELETE:
         	MyPaintPanel.shapes.clear();

@@ -7,6 +7,7 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.event.MouseAdapter;
@@ -61,6 +62,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         		case toolRectangle:
         			Shape r = makeRectangle(startDrag.x, startDrag.y, evt.getX(), evt.getY());
                     shapes.add(r);
+                    currentShapeIndex=currentNumberOfShapes;
                     currentNumberOfShapes++;
                     startDrag = null;
                     endDrag = null;
@@ -70,6 +72,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         		case toolLine:
         			Shape l = makeLine(startDrag.x, startDrag.y, evt.getX(), evt.getY());
                     shapes.add(l);
+                    currentShapeIndex=currentNumberOfShapes;
                     currentNumberOfShapes++;
                     startDrag = null;
                     endDrag = null;
@@ -102,10 +105,13 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         		Graphics graphics = getGraphics();
         		graphics.setXORMode(getBackground());
         		((Graphics2D) graphics).draw(shapes.get(currentShapeIndex));
-        		//shapes.get(currentShapeIndex).x = x-boxSideLength/2;
-        		//shapes.get(currentShapeIndex).y = y-boxSideLength/2;
-        		//((Graphics2D) graphics).draw(shapes.get(currentShapeIndex));
+        		Rectangle r = new Rectangle(shapes.get(currentShapeIndex).getBounds());
+        		r.x=x;
+        		r.y=y;
+        		shapes.set(currentShapeIndex, r);
+        		((Graphics2D) graphics).draw(shapes.get(currentShapeIndex));
         		graphics.dispose();
+        		endDrag = new Point(x, y);
         		repaint();
         	}
     		break;
@@ -135,7 +141,6 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
           ((Graphics2D) g).draw(s);
           ((Graphics2D) g).setPaint(colors[(colorIndex++) % 3]);
           ((Graphics2D) g).fill(s);
-          currentShapeIndex++;
         }
         
         switch (drawingTool) {
