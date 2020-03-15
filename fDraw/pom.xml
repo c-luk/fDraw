@@ -52,21 +52,34 @@
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>1.6.0</version>
+        
         <executions>
-          <execution>
+        
+<!--     <execution>
             <goals>
               <goal>exec</goal>
             </goals>
+	        <configuration>
+	    	    <executable>java</executable>
+	        	<arguments>
+	            	<argument>-classpath</argument>
+	            	<classpath/>
+	            	<argument>com.lukasiewicz.fdraw.FDrawMain</argument>
+	          	</arguments>
+        	</configuration>
+       	  </execution>
+-->
+      
+          <execution>
+            <goals>
+            	<goal>java</goal>
+            </goals>
+            <configuration>
+            	<mainClass>com.lukasiewicz.fdraw.FDrawMain</mainClass>
+            </configuration>
           </execution>
+        
         </executions>
-        <configuration>
-          <executable>java</executable>
-          <arguments>
-            <argument>-classpath</argument>
-            <classpath/>
-            <argument>com.lukasiewicz.fdraw.FDrawMain</argument>
-          </arguments>
-        </configuration>
       </plugin>
     </plugins>
 

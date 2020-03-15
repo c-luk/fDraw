@@ -35,7 +35,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
    	    
     public MyPaintPanel() {
     	
-    	// Setup PainPanel
+    	// Setup PaintPanel
     	
     	setBorder(BorderFactory.createLineBorder(Color.black));
     	setBackground(new Color(250,250,250));
@@ -97,7 +97,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         addMouseMotionListener(this);
     }
     
-    // Mouse draggin event   
+    // Mouse draggin' event   
     
     public void mouseDragged(MouseEvent evt) {
     	
@@ -119,7 +119,6 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         		shapes.set(currentShapeIndex, r);
         		((Graphics2D) graphics).draw(shapes.get(currentShapeIndex));
         		graphics.dispose();
-        		//endDrag = new Point(x, y);
         		repaint();
         	}
     		break;
