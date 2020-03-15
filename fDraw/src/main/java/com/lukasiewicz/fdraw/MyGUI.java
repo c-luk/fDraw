@@ -162,7 +162,7 @@ public class MyGUI extends JFrame implements ActionListener {
         aboutText.append("Welcome to the about page."+"\n\n");
         aboutText.append("Here you will learn more about this app."+"\n");
         aboutText.append("...once there is something to learn about."+"\n\n");
-        aboutText.append("actually, it's a rather simple app with only three buttons..."+"\n");
+        aboutText.append("actually, it's a rather simple app with only four buttons..."+"\n");
         aboutText.append("you'll figure it out all by yourself. i'm sure of it."+"\n\n");
         aboutText.append("good luck.");
         
