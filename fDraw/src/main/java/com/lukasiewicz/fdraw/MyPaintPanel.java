@@ -3,6 +3,7 @@ package com.lukasiewicz.fdraw;
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -25,6 +26,8 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
 	final int toolRectangle = 1;
 	final int toolLine = 2;
 	final int toolMove = 3;
+	private int currentNumberOfShapes = 0;
+    //private int currentShapeIndex = -1;
 	
     Point startDrag, endDrag;
     public static ArrayList<Shape> shapes = new ArrayList<Shape>();
@@ -58,6 +61,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         		case toolRectangle:
         			Shape r = makeRectangle(startDrag.x, startDrag.y, evt.getX(), evt.getY());
                     shapes.add(r);
+                    currentNumberOfShapes++;
                     startDrag = null;
                     endDrag = null;
                     repaint();
@@ -66,6 +70,7 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
         		case toolLine:
         			Shape l = makeLine(startDrag.x, startDrag.y, evt.getX(), evt.getY());
                     shapes.add(l);
+                    currentNumberOfShapes++;
                     startDrag = null;
                     endDrag = null;
                     repaint();
@@ -151,7 +156,22 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     }
     
 	@Override
-	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
+	public void mouseMoved(MouseEvent evt) {
+		int x = evt.getX();
+    	int y = evt.getY();
+    	if (getShape(x, y) >= 0) {
+    		setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+    	} else {
+    		setCursor(Cursor.getDefaultCursor());
+    	  }
 	}
+	
+	private int getShape(int x, int y) {
+    	for (int i = 0; i < currentNumberOfShapes; i++) {
+    		if (shapes.get(i).contains(x, y)) {
+        	    return i;
+        	}
+    	}
+        return -1;
+    }
 }
