@@ -23,14 +23,20 @@ public class MyToolBar extends JPanel implements ActionListener {
     static final private String DRAW_RECTANGLE = "Rectangle";
     static final private String DELETE = "Delete";
     static final private String MOVE = "Move";
+    
     static private JButton rectangleButton = null;
     static private JButton lineButton = null;
     static private JButton moveButton = null;
     static private JButton deleteButton = null;
     static private Color buttonBackground = new Color(230,230,230);
+    
     static private boolean rectangleButtonPressed = true;
     static private boolean lineButtonPressed = false;
     static private boolean moveButtonPressed = false;
+    
+    static private String moveButtonText = "Move 'em all like there's no tomorrow! (lines don't move yet)";
+    static private String lineButtonText = "You wanna draw a line? Ha! - okay, go for it!.";
+    static private String rectangleButtonText = "Draw colored rectangles! Red at first, then green and blue at last. Repeat.";
     
 	public MyToolBar() {
 		
@@ -216,15 +222,15 @@ public class MyToolBar extends JPanel implements ActionListener {
         
         case DRAW_RECTANGLE:
         	MyPaintPanel.drawingTool = 1;
-        	MyGUI.setLabelText("Draw colored rectangles! Red at first, then green and blue at last. Repeat.");
+        	MyGUI.setLabelText(rectangleButtonText);
         	break;
         case DRAW_LINE:
         	MyPaintPanel.drawingTool = 2;
-        	MyGUI.setLabelText("You wanna draw a line? Ha! - okay, go for it!.");
+        	MyGUI.setLabelText(lineButtonText);
         	break;
         case MOVE:
         	MyPaintPanel.drawingTool = 3;
-        	MyGUI.setLabelText("Move 'em all like there's no tomorrow! (not yet implemented the right way)");
+        	MyGUI.setLabelText(moveButtonText);
         	break;
         case DELETE:
         	MyPaintPanel.shapes.clear();

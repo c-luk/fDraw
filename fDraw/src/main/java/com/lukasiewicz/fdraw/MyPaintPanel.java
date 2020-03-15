@@ -46,11 +46,16 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
             
         	@Override
         	public void mousePressed(MouseEvent evt) {
-
+        		
+        		int x = evt.getX();
+            	int y = evt.getY();
+            	
         		if(drawingTool!=toolMove) {
         			startDrag = new Point(evt.getX(), evt.getY());
                     endDrag = startDrag;
                     repaint();	
+        		} else if(getShape(x, y) >= 0) {
+        			currentShapeIndex = getShape(x, y);
         		}
         	}
         	
@@ -102,16 +107,19 @@ public class MyPaintPanel extends JPanel implements MouseMotionListener {
     	switch(drawingTool) {
     	case toolMove:
     		if (currentShapeIndex >= 0) {
-        		Graphics graphics = getGraphics();
+    			Graphics graphics = getGraphics();
         		graphics.setXORMode(getBackground());
         		((Graphics2D) graphics).draw(shapes.get(currentShapeIndex));
+        		
+        		// ==> IMPLEMENT: If Shape is a rectangle or line -- how to? 
+        		
         		Rectangle r = new Rectangle(shapes.get(currentShapeIndex).getBounds());
         		r.x=x;
         		r.y=y;
         		shapes.set(currentShapeIndex, r);
         		((Graphics2D) graphics).draw(shapes.get(currentShapeIndex));
         		graphics.dispose();
-        		endDrag = new Point(x, y);
+        		//endDrag = new Point(x, y);
         		repaint();
         	}
     		break;
