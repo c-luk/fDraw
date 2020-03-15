@@ -1,8 +1,15 @@
 # fDraw
-a simple learning playground for testing purposes
+#### a simple learning playground for testing purposes
 
 this app should enable a user to draw a rectangle or a line on a paint area. 
 a toolbar should let a user choose a drawing method.
+
+---
+
+ChangeLog 0.45:
+- added button for moving shapes (not working on line shapes yet)
+- added button for deleting the paint area
+- configured maven exec plugin
 
 ChangeLog 0.44:
 - project transfered to github
