@@ -4,8 +4,10 @@
   - CTRL-S or a menu entry should let the user save the paint area to a file
   
 - ### Moving a shape should be possible
-- The dear user should be able to move (drag&drop) a created shape freely on the paint area
+  - The dear user should be able to move (drag&drop) a created shape freely on the paint area
 
+<br/>
+<br/>
 
 #### done and dusted:
 ----
