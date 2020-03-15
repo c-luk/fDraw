@@ -6,7 +6,7 @@
 - ### Moving a shape should be possible
   - The dear user should be able to move (drag&drop) a created shape freely on the paint area
 
-\
+
 
 #### done and dusted:
 ----
