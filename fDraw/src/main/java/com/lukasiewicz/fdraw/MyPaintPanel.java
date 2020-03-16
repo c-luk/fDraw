@@ -21,7 +21,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class MyPaintPanel extends JPanel implements MouseMotionListener {
+public class MyPaintPanel extends JPanel implements MouseMotionListener, java.io.Serializable {
 	
     public static int drawingTool = 1;
 	final int toolRectangle = 1;

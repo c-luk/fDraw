@@ -3,14 +3,18 @@ package com.lukasiewicz.fdraw;
 import java.awt.Container;
 import java.awt.Dialog;
 import java.awt.Dimension;
+import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -29,8 +33,7 @@ public class MyGUI extends JFrame implements ActionListener {
 	static String labelText = "Draw colored rectangles! Red at first, then green and blue at last. Repeat.";
 	static JLabel label = new JLabel(labelText);
 	static MyPaintPanel paintArea = new MyPaintPanel();
-	
-	
+
 	
 	public static void createAndShowGUI(String appversion) {
 
@@ -47,6 +50,7 @@ public class MyGUI extends JFrame implements ActionListener {
 		
 		JMenuBar menuBar;
 		JMenu menu;
+		JMenuItem openItem;
 		JMenuItem saveItem;
 		JMenuItem exitItem;
 		JMenuItem aboutItem;
@@ -60,6 +64,57 @@ public class MyGUI extends JFrame implements ActionListener {
 		menuBar.add(menu);
 	
 		// File menu items
+		
+			// Open
+		
+		openItem = new JMenuItem("Open (not working yet)", KeyEvent.VK_O);
+		openItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+		openItem.getAccessibleContext().setAccessibleDescription("Opens a saved creation.");
+		openItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				final JFileChooser fc = new JFileChooser();
+				int returnVal = fc.showOpenDialog(guiWindow);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+			        File file = fc.getSelectedFile();
+			        try
+			        {    
+			        	
+			        	//Clear MyPaintPanel
+			        	MyPaintPanel.shapes.clear();
+			        	MyPaintPanel.currentNumberOfShapes = 0;
+			        	MyPaintPanel.currentShapeIndex = -1;
+			        	paintArea.repaint();
+
+			        	// Reading the object from a file
+			        	FileInputStream fileIS = new FileInputStream(file);
+			            ObjectInputStream in = new ObjectInputStream(fileIS); 
+			              
+			            // Method for deserialization of object 
+			            MyPaintPanel.shapes = (ArrayList<Shape>)in.readObject(); 
+			            MyPaintPanel.currentShapeIndex++;
+			            
+			            in.close(); 
+			            fileIS.close();
+			            
+			            paintArea.repaint();
+			            
+			        } 
+			          
+			        catch(IOException ex) 
+			        { 
+			            System.out.println("IOException is caught"); 
+			        } 
+			          
+			        catch(ClassNotFoundException ex) 
+			        { 
+			            System.out.println("ClassNotFoundException is caught"); 
+			        } 
+
+			        	
+				}
+			}
+		});
+		menu.add(openItem);
 		
 			//	Save
 		saveItem = new JMenuItem("Save", KeyEvent.VK_S);
