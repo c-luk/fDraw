@@ -6,8 +6,13 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -24,6 +29,8 @@ public class MyGUI extends JFrame implements ActionListener {
 	static String labelText = "Draw colored rectangles! Red at first, then green and blue at last. Repeat.";
 	static JLabel label = new JLabel(labelText);
 	static MyPaintPanel paintArea = new MyPaintPanel();
+	
+	
 	
 	public static void createAndShowGUI(String appversion) {
 
@@ -55,12 +62,36 @@ public class MyGUI extends JFrame implements ActionListener {
 		// File menu items
 		
 			//	Save
-		saveItem = new JMenuItem("Save (not implemented yet)", KeyEvent.VK_S);
+		saveItem = new JMenuItem("Save", KeyEvent.VK_S);
 		saveItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
 		saveItem.getAccessibleContext().setAccessibleDescription("Saves your wonderful drawing.");
 		saveItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-			// Save Method yet to be implemented...
+				final JFileChooser fc = new JFileChooser();
+				int returnVal = fc.showSaveDialog(guiWindow);
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+			        File file = fc.getSelectedFile();
+			        PrintWriter pw = null;
+					FileOutputStream fo = null;
+					try {
+						pw = new PrintWriter(new FileOutputStream(file));
+						fo = new FileOutputStream(file);
+						int listSize = MyPaintPanel.shapes.size();
+						for (int i = 0; i < listSize; i++) {
+							pw.write(MyPaintPanel.shapes.get(i).toString() + "\n");
+						}
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					} finally {
+						pw.flush();
+						pw.close();
+						try {
+							fo.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
 			}
 		});
 		menu.add(saveItem);
@@ -201,4 +232,5 @@ public class MyGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 	}
+
 }
